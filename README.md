@@ -2,6 +2,10 @@
 
 Welcome to the TensorFlow Style Transfer README! This project combines the power of TensorFlow for neural style transfer and provides a Flask web interface for applying artistic styles to images. Below, we describe the functionalities of this project.
 
+
+https://github.com/HugoLB0/tensorflow-style-transfer-flask-interface/assets/66400773/7b793519-6e86-4cc5-b6d0-59b954a12365
+
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Functionalities](#functionalities)
