@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Neural Style Transfer</title>
+    <style>
+      body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+        margin-top: 0;
+      }
+
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      input[type="file"] {
+        margin-bottom: 20px;
+      }
+
+      select {
+        margin-bottom: 20px;
+      }
+
+      button[type="submit"] {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+
+      h2 {
+        text-align: center;
+        margin-top: 40px;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+        margin: 0 auto;
+      }
+
+      img.input-image {
+        max-width: 400px;
+        max-height: 400px;
+      }
+
+      img.style-image {
+        max-width: 400px;
+        max-height: 400px;
+      }
+
+
+    </style>
+  <body>
+    <h1>Neural Style Transfer</h1>
+    <form action="/" method="POST" enctype="multipart/form-data">
+      <p>
+        <label for="input-image">Input Image:</label>
+        <input type="file" id="input-image" name="input-image" accept="image/*" required>
+        <img id="input-preview" src="#" alt="Input Image Preview" style="display:none;" class="input-image">
+      </p>
+      <p>
+        <label for="style-image">Style Image:</label>
+        <input type="file" id="style-image" name="style-image" accept="image/*" required>
+        <img id="style-preview" src="#" alt="Style Image Preview" style="display:none;" class="style-image">
+      </p>
+      
+      <p>
+        <label for="model">Model:</label>
+        <select id="model" name="model">
+          <option value="vgg16">VGG16</option>
+          <option value="vgg19">VGG19</option>
+        </select>
+      </p>
+      <p>
+        <label for="num-epochs">Number of Epochs:</label>
+        <input type="range" id="num-epochs" name="num-epochs" min="0" max="1000" value="1000">
+        <span id="num-epochs-value">1000</span>
+      </p>
+      
+      <button type="submit">Transfer Style</button>
+    </form>
+    {% if output_image %}
+      <h2>Output Image</h2>
+      <img src="/output.png" alt="Output Image">
+    {% endif %}
+    <script>
+      var numEpochs = document.getElementById("num-epochs");
+      var numEpochsValue = document.getElementById("num-epochs-value");
+      numEpochsValue.innerHTML = numEpochs.value;
+      numEpochs.oninput = function() {
+        numEpochsValue.innerHTML = this.value;
+      }
+
+    </script>
+    <script>
+      var inputImage = document.getElementById('input-image');
+      var inputPreview = document.getElementById('input-preview');
+      inputImage.addEventListener('change', function() {
+        var file = inputImage.files[0];
+        var reader = new FileReader();
+        reader.onload = function() {
+          inputPreview.src = reader.result;
+          inputPreview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+      });
+    
+      var styleImage = document.getElementById('style-image');
+      var stylePreview = document.getElementById('style-preview');
+      styleImage.addEventListener('change', function() {
+        var file = styleImage.files[0];
+        var reader = new FileReader();
+        reader.onload = function() {
+          stylePreview.src = reader.result;
+          stylePreview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+      });
+    </script>
+    
+  </body>
+</html>
